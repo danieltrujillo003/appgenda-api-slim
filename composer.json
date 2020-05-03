@@ -1,0 +1,7 @@
+{
+    "name": "appgenda/appgenda-api",
+    "description": "API for Appgenda app built in Slim 3",
+    "require": {
+        "slim/slim": "^3.0"
+    }
+}
