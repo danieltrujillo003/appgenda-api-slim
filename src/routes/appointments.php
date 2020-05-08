@@ -3,6 +3,12 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: access, Content-Type"); // , Access-Control-Allow-Headers, Authorization, X-Requested-With
+header("Access-Control-Allow-Methods: GET, PUT, POST, DELETE");
+header("Access-Control-Allow-Credentials: true");
+header("Content-Type: application/json; charset=UTF-8");
+
 $app = new \Slim\App;
 
 $app->get('/api/appointments', function (Request $request, Response $response) {
@@ -59,7 +65,6 @@ $app->post('/api/appointment/add', function (Request $request, Response $respons
     $stmt->execute(['date'=>$date,'time'=>$time,'description'=>$description,'name'=>$name,'lastname'=>$lastname,'clientid'=>$clientid,'birthdate'=>$birthdate,'city'=>$city,'neighborhood'=>$neighborhood,'address'=>$address,'phonenumber'=>$phonenumber]);
 
     return $response->withStatus(200)
-    ->withHeader('Content-Type', 'application/json')
     ->write(json_encode(array('message' => 'appointment added')));
 
   } catch(PDOException $e) {
@@ -83,7 +88,6 @@ $app->put('/api/appointment/update/{id}', function (Request $request, Response $
     $stmt->execute(['date'=>$date,'time'=>$time,'description'=>$description,'name'=>$name,'lastname'=>$lastname,'clientid'=>$clientid,'birthdate'=>$birthdate,'city'=>$city,'neighborhood'=>$neighborhood,'address'=>$address,'phonenumber'=>$phonenumber,'id'=>$id]);
 
     return $response->withStatus(200)
-    ->withHeader('Content-Type', 'application/json')
     ->write(json_encode(array('message' => 'appointment updated')));
 
   } catch(PDOException $e) {
@@ -105,7 +109,6 @@ $app->delete('/api/appointment/delete/{id}', function (Request $request, Respons
     $stmt->execute([$id]);
 
     return $response->withStatus(200)
-    ->withHeader('Content-Type', 'application/json')
     ->write(json_encode(array('message' => 'appointment deleted')));
 
   } catch(PDOException $e) {
